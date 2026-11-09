@@ -36,3 +36,10 @@ When the heap is full and a new value equals the current minimum, the new value 
 ## Edge case: booleans
 
 `True` and `False` are rejected by `push` with a `TypeError`, even though `bool` is a subclass of `int` in Python. Allowing booleans would invite silent numeric surprises (e.g., `True` treated as `1`). If you need to track booleans, convert them to integers explicitly first.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
